@@ -1,0 +1,10 @@
+<div>
+    <ul *ngFor="let result of results">
+        <div *ngFor="let forex of result.arrayofkeyvalue; let i = index;">
+            <li *ngIf="i !== 0">{{forex.k}} - {{forex.v}}
+                <button (click)="deleteForex(i)">delete</button>
+            </li>
+        </div>
+   </ul>
+</div>
+<button (click)="getRatesapi()">View</button>
