@@ -18,7 +18,8 @@ export class AppComponent {
   curr_rates: any;
   results: Array<Forex>;
   
-  constructor(private _dataservice: DataService) {
+  constructor(private _dataservice: DataService,
+              public dialog: MatDialog) {
      
      this._dataservice.getFixer().subscribe(res => {
         
@@ -49,7 +50,28 @@ export class AppComponent {
   
   }
 
-  openDialog(){
-    
+  openDialog(): void {
+    let dialogRef = this.dialog.open(modalForex, {
+      width: '250px'
+      //data: { name: this.name, animal: this.animal }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //this.animal = result;
+    });
+  }
+}
+
+@Component({
+  selector: 'modal-forex',
+  templateUrl: 'modal-forex.html',
+})
+export class modalForex {
+  
+  constructor(public dialogRef: MatDialogRef<modalForex>){}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

@@ -3,7 +3,7 @@
         <div *ngFor="let forex of result.arrayofkeyvalue; let i = index;">
             <li *ngIf="i !== 0">{{forex.k}} - {{forex.v}}
                 <button (click)="deleteForex(forex.k)">delete</button>
-                <button>edit</button>
+                <button (click)="openDialog()">edit</button>
             </li>
         </div>
    </ul>

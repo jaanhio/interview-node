@@ -38,7 +38,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n    <ul *ngFor=\"let result of results\">\n        <div *ngFor=\"let forex of result.arrayofkeyvalue; let i = index;\">\n            <li *ngIf=\"i !== 0\">{{forex.k}} - {{forex.v}}\n                <button (click)=\"deleteForex(forex.k)\">delete</button>\n                <button type=\"button\" data-toggle=\"modal\" data-target=\"#exampleModal\">\n                    Edit\n                  </button>\n            </li>\n        </div>\n        //Modal\n        <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n            <div class=\"modal-dialog\" role=\"document\">\n              <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                  <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n                  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                    <span aria-hidden=\"true\">&times;</span>\n                  </button>\n                </div>\n                <div class=\"modal-body\">\n                  Sample Modal\n                </div>\n              </div>\n            </div>\n          </div>\n   </ul>\n</div>\n<button (click)=\"getRatesapi()\">View</button>"
+module.exports = "<div>\n    <ul *ngFor=\"let result of results\">\n        <div *ngFor=\"let forex of result.arrayofkeyvalue; let i = index;\">\n            <li *ngIf=\"i !== 0\">{{forex.k}} - {{forex.v}}\n                <button (click)=\"deleteForex(forex.k)\">delete</button>\n                <button (click)=\"openDialog()\">edit</button>\n            </li>\n        </div>\n   </ul>\n</div>\n<button (click)=\"getRatesapi()\">View</button>"
 
 /***/ }),
 
@@ -47,8 +47,10 @@ module.exports = "<div>\n    <ul *ngFor=\"let result of results\">\n        <div
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return modalForex; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_service__ = __webpack_require__("../../../../../src/app/data.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -60,11 +62,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 ;
 var AppComponent = /** @class */ (function () {
-    function AppComponent(_dataservice) {
+    function AppComponent(_dataservice, dialog) {
         var _this = this;
         this._dataservice = _dataservice;
+        this.dialog = dialog;
         this._dataservice.getFixer().subscribe(function (res) {
             _this.curr_rates = res.rates;
             _this._dataservice.saveRates(_this.curr_rates).subscribe(function (response) {
@@ -83,15 +87,43 @@ var AppComponent = /** @class */ (function () {
             console.log("The Array number is: " + curr);
         });
     };
+    AppComponent.prototype.openDialog = function () {
+        var dialogRef = this.dialog.open(modalForex, {
+            width: '250px'
+            //data: { name: this.name, animal: this.animal }
+        });
+        dialogRef.afterClosed().subscribe(function (result) {
+            console.log('The dialog was closed');
+            //this.animal = result;
+        });
+    };
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'app-root',
             template: __webpack_require__("../../../../../src/app/app.component.html"),
             styles: [__webpack_require__("../../../../../src/app/app.component.css")]
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__data_service__["a" /* DataService */]])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__data_service__["a" /* DataService */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_material__["a" /* MatDialog */]])
     ], AppComponent);
     return AppComponent;
+}());
+
+var modalForex = /** @class */ (function () {
+    function modalForex(dialogRef) {
+        this.dialogRef = dialogRef;
+    }
+    modalForex.prototype.onNoClick = function () {
+        this.dialogRef.close();
+    };
+    modalForex = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'modal-forex',
+            template: __webpack_require__("../../../../../src/app/modal-forex.html"),
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__angular_material__["c" /* MatDialogRef */]])
+    ], modalForex);
+    return modalForex;
 }());
 
 
@@ -108,6 +140,8 @@ var AppComponent = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__("../../../http/esm5/http.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__data_service__ = __webpack_require__("../../../../../src/app/data.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/esm5/animations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_material__ = __webpack_require__("../../../material/esm5/material.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -119,17 +153,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+//Angular Material
+
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["E" /* NgModule */])({
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["H" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */]
+                __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */],
+                __WEBPACK_IMPORTED_MODULE_3__app_component__["b" /* modalForex */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-                __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* HttpModule */]
+                __WEBPACK_IMPORTED_MODULE_2__angular_http__["b" /* HttpModule */],
+                __WEBPACK_IMPORTED_MODULE_6__angular_material__["b" /* MatDialogModule */],
+                __WEBPACK_IMPORTED_MODULE_5__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */]
+            ],
+            entryComponents: [
+                __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */],
+                __WEBPACK_IMPORTED_MODULE_3__app_component__["b" /* modalForex */]
             ],
             providers: [
                 __WEBPACK_IMPORTED_MODULE_4__data_service__["a" /* DataService */]
@@ -193,13 +237,20 @@ var DataService = /** @class */ (function () {
         var _a;
     };
     DataService = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* Injectable */])(),
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["z" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]])
     ], DataService);
     return DataService;
 }());
 
 
+
+/***/ }),
+
+/***/ "../../../../../src/app/modal-forex.html":
+/***/ (function(module, exports) {
+
+module.exports = "<h1 mat-dialog-title>Sample Modal</h1>\r\n<div mat-dialog-content>\r\n  <p>This is only a testing</p>\r\n</div>"
 
 /***/ }),
 
@@ -233,7 +284,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_5" /* enableProdMode */])();
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* enableProdMode */])();
 }
 Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */])
     .catch(function (err) { return console.log(err); });
