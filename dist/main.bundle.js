@@ -38,7 +38,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n    <ul *ngFor=\"let result of results\">\n        <div *ngFor=\"let forex of result.arrayofkeyvalue; let i = index;\">\n            <li *ngIf=\"i !== 0\">{{forex.k}} - {{forex.v}}\n                <button (click)=\"deleteForex(i)\">delete</button>\n            </li>\n        </div>\n   </ul>\n</div>\n<button (click)=\"getRatesapi()\">View</button>"
+module.exports = "<div>\n    <ul *ngFor=\"let result of results\">\n        <div *ngFor=\"let forex of result.arrayofkeyvalue; let i = index;\">\n            <li *ngIf=\"i !== 0\">{{forex.k}} - {{forex.v}}\n                <button (click)=\"deleteForex(forex.k)\">delete</button>\n                <button type=\"button\" data-toggle=\"modal\" data-target=\"#exampleModal\">\n                    Edit\n                  </button>\n            </li>\n        </div>\n        //Modal\n        <div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n            <div class=\"modal-dialog\" role=\"document\">\n              <div class=\"modal-content\">\n                <div class=\"modal-header\">\n                  <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n                  <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n                    <span aria-hidden=\"true\">&times;</span>\n                  </button>\n                </div>\n                <div class=\"modal-body\">\n                  Sample Modal\n                </div>\n              </div>\n            </div>\n          </div>\n   </ul>\n</div>\n<button (click)=\"getRatesapi()\">View</button>"
 
 /***/ }),
 
@@ -78,9 +78,10 @@ var AppComponent = /** @class */ (function () {
             console.log(_this.results);
         });
     };
-    AppComponent.prototype.deleteForex = function (id) {
-        //this._dataservice.deleteRates(id).subscribe(response => {
-        console.log("The Array number is: " + id);
+    AppComponent.prototype.deleteForex = function (curr) {
+        this._dataservice.deleteRates(curr).subscribe(function (response) {
+            console.log("The Array number is: " + curr);
+        });
     };
     AppComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -180,9 +181,16 @@ var DataService = /** @class */ (function () {
         return this._http.post('/rates', this.ratesbody)
             .map(function (res) { return res.json(); });
     };
-    DataService.prototype.deleteRates = function (id) {
-        return this._http.delete('/rates/' + id)
+    DataService.prototype.deleteRates = function (curr) {
+        var body = (_a = {},
+            _a[curr] = 1,
+            _a);
+        var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* RequestOptions */]({
+            body: body
+        });
+        return this._http.delete('/rates', options)
             .map(function (res) { return res.json(); });
+        var _a;
     };
     DataService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* Injectable */])(),

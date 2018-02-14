@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { RequestOptions, Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-
-
 
 @Injectable()
 export class DataService {
 
   result;
   ratesbody: any;
+  keybody: any;
 
   constructor(private _http: Http) {}
 
@@ -33,9 +32,17 @@ export class DataService {
     .map(res => res.json());
   }
 
-  deleteRates(id) {
+  deleteRates(curr) {
 
-   return this._http.delete('/rates/' + id)
+  var body = {
+    [curr]: 1
+  }
+
+let options = new RequestOptions({
+   body: body
+});
+   
+   return this._http.delete('/rates', options)
    .map(res => res.json());
   }
 

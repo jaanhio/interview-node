@@ -5,13 +5,19 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { DataService } from './data.service';
 
+//Angular Material
+import {MatDialogModule} from '@angular/material/dialog';
+import { ForexComponent } from './modal/forex/forex.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ForexComponent
   ],
   imports: [
     BrowserModule,
-    HttpModule
+    HttpModule,
+    MatDialogModule
   ],
   providers: [
     DataService

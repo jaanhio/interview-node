@@ -76,15 +76,25 @@ router.post('/rates', (req, res) => {
 });
 
 //DELETE api rates
-router.delete('/rates/:id', (req, res) => {
+router.delete('/rates', (req, res) => {
     connection((db) => {
+
+    console.log(req.body);
     
     db.collection('rates')
-    .findByIdAndRemove(req.params.id, req.body, (err, result) => {
+    .update({},{$unset: req.body},{multi:true}, (err, result) => {
       if(err) return console.log(err);
       res.json(result)
+
+      console.log("Record Deleted.");
       });
     });
+});
+
+//UPDATE api rates
+router.put('/rates', (req, res) => {
+
+
 });
 
 module.exports = router;

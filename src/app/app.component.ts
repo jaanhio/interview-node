@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from './data.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 interface Forex {
 currency: string,
@@ -39,9 +40,16 @@ export class AppComponent {
     });
   }
 
-  deleteForex(id){
+  deleteForex(curr){
    
-    //this._dataservice.deleteRates(id).subscribe(response => {
-    console.log("The Array number is: " + id);
+    this._dataservice.deleteRates(curr).subscribe(response => {
+    
+    console.log("The Array number is: " + curr);
+  });
+  
+  }
+
+  openDialog(){
+    
   }
 }

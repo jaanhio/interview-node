@@ -13,8 +13,9 @@ I want to track some forex rates. Typical use cases:
 
 ## Setup
 
-- Install dependencies `yarn`
-- Launch server `yarn start`
+- Install angular-cli: npm install -g @angular/cli
+- Install express: npm install express body-parser --save
+- Install mongo: npm install mongodb --save
 
 ## Development
 
