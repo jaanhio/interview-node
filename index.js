@@ -1,8 +1,13 @@
 const app = require("express")();
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const db = require('./db');
+const routes = require('./routes');
 
-app.get("/", (req, res) => {
-    res.send("Hi you can set forex levels with me!");
-});
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+routes(app, db);
 
 var port = process.env.PORT || 5000;
 

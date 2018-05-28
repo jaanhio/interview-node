@@ -4,13 +4,19 @@
   "description": "Interview test: Design a webapp with Node.JS",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "start": "nodemon ."
   },
-  "engines" : { 
-    "node" : ">=8.9.0" 
+  "engines": {
+    "node": ">=8.9.0"
   },
   "repository": "git@github.com:calllevels/interview-node.git",
   "dependencies": {
-    "express": "^4.16.2"
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.2",
+    "nodemon": "^1.17.5",
+    "pg": "^7.4.3"
   }
 }
