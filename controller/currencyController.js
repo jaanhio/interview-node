@@ -14,10 +14,11 @@ const getAllCurrencyRates = (db) => {
           const { name, rate } = result;
           rates[name] = rate;
         });
-        response.status(200).send({
-          date: updatedDate,
-          rates: rates
-        });
+        // response.status(200).send({
+        //   date: updatedDate,
+        //   rates: rates
+        // });
+        response.status(200).send(queryResult);
       }
     });
   }
